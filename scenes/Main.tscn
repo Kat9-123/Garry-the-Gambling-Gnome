@@ -1,0 +1,669 @@
+[gd_scene load_steps=33 format=2]
+
+[ext_resource path="res://scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/Environment.tres" type="Environment" id=2]
+[ext_resource path="res://assets/sprites/Titlescreen.png" type="Texture" id=3]
+[ext_resource path="res://assets/Font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://src/UIManager.gd" type="Script" id=5]
+[ext_resource path="res://src/GameManager.gd" type="Script" id=6]
+[ext_resource path="res://assets/sprites/white.png" type="Texture" id=7]
+[ext_resource path="res://src/Transition.gd" type="Script" id=8]
+[ext_resource path="res://src/Settings.gd" type="Script" id=9]
+[ext_resource path="res://src/HUD.gd" type="Script" id=10]
+[ext_resource path="res://assets/sprites/Level_select_background1.png" type="Texture" id=11]
+[ext_resource path="res://assets/sprites/icon_sound_off1.png" type="Texture" id=12]
+[ext_resource path="res://assets/sprites/icon_timer_on1.png" type="Texture" id=13]
+[ext_resource path="res://assets/sprites/icon_timer_off1.png" type="Texture" id=14]
+[ext_resource path="res://assets/sprites/icon_windowed1.png" type="Texture" id=15]
+[ext_resource path="res://assets/sprites/icon_full_screen1.png" type="Texture" id=16]
+[ext_resource path="res://assets/sprites/icon_sound_on1.png" type="Texture" id=17]
+[ext_resource path="res://src/SaveManager.gd" type="Script" id=18]
+[ext_resource path="res://src/LevelSelectScreen.gd" type="Script" id=19]
+[ext_resource path="res://assets/sprites/level_button1.png" type="Texture" id=20]
+[ext_resource path="res://assets/sprites/locked_icon1.png" type="Texture" id=21]
+[ext_resource path="res://assets/sprites/Playbutton1.png" type="Texture" id=22]
+[ext_resource path="res://assets/sprites/Exitbutton1.png" type="Texture" id=23]
+[ext_resource path="res://assets/sprites/Title.png" type="Texture" id=24]
+[ext_resource path="res://src/Audio.gd" type="Script" id=25]
+[ext_resource path="res://src/Music.gd" type="Script" id=26]
+[ext_resource path="res://src/ButtonScript.gd" type="Script" id=27]
+[ext_resource path="res://src/OtherButton.gd" type="Script" id=28]
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 4 )
+
+[sub_resource type="Theme" id=2]
+default_font = ExtResource( 4 )
+
+[sub_resource type="Theme" id=3]
+default_font = ExtResource( 4 )
+
+[sub_resource type="Theme" id=4]
+default_font = ExtResource( 4 )
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Audio" type="AudioStreamPlayer2D" parent="."]
+volume_db = -6.0
+script = ExtResource( 25 )
+
+[node name="Music" type="AudioStreamPlayer2D" parent="."]
+volume_db = -8.0
+script = ExtResource( 26 )
+
+[node name="CurrentLevel" type="Node2D" parent="."]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+visible = false
+position = Vector2( 96, 96 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 512, 304 )
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = ExtResource( 2 )
+
+[node name="LevelTimer" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="Control" type="Control" parent="."]
+margin_right = 1024.0
+margin_bottom = 600.0
+mouse_filter = 2
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayEnabledTimer" type="Timer" parent="Control"]
+wait_time = 0.7
+one_shot = true
+
+[node name="Title" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Titlescreen" type="Sprite" parent="Control/Title"]
+position = Vector2( 512, 304 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 3 )
+
+[node name="TITLE" type="Sprite" parent="Control/Title"]
+position = Vector2( 520, 120 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 24 )
+
+[node name="Play" type="Button" parent="Control/Title"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 352.0
+margin_top = 216.0
+margin_right = 672.0
+margin_bottom = 344.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 4 )
+button_mask = 7
+enabled_focus_mode = 0
+text = "Play"
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/Title/Play"]
+position = Vector2( 160, 64 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 22 )
+
+[node name="Credits" type="RichTextLabel" parent="Control/Title"]
+margin_left = 504.0
+margin_top = -8.0
+margin_right = 1024.0
+margin_bottom = 152.0
+theme = SubResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[right]
+A game by:
+Kat9_123 [Programming]
+dekaaspro [Art]"
+text = "
+A game by:
+Kat9_123 [Programming]
+dekaaspro [Art]"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="Control/Title"]
+self_modulate = Color( 1, 1, 1, 0 )
+margin_left = 408.0
+margin_top = 344.0
+margin_right = 616.0
+margin_bottom = 440.0
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/Title/Exit"]
+position = Vector2( 104, 48 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 23 )
+
+[node name="Settings" type="Control" parent="Control/Title"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Fullscreen" type="Control" parent="Control/Title/Settings"]
+margin_left = 40.0
+margin_top = 568.0
+margin_right = 80.0
+margin_bottom = 608.0
+rect_scale = Vector2( 4, 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="FullscreenButton" type="Button" parent="Control/Title/Settings/Fullscreen"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 12.0
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="On" type="Sprite" parent="Control/Title/Settings/Fullscreen"]
+visible = false
+texture = ExtResource( 16 )
+
+[node name="Off" type="Sprite" parent="Control/Title/Settings/Fullscreen"]
+texture = ExtResource( 15 )
+
+[node name="Sound" type="Control" parent="Control/Title/Settings"]
+margin_left = 112.0
+margin_top = 568.0
+margin_right = 152.0
+margin_bottom = 608.0
+rect_scale = Vector2( 4, 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundButton" type="Button" parent="Control/Title/Settings/Sound"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 12.0
+script = ExtResource( 27 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="On" type="Sprite" parent="Control/Title/Settings/Sound"]
+texture = ExtResource( 17 )
+
+[node name="Off" type="Sprite" parent="Control/Title/Settings/Sound"]
+visible = false
+texture = ExtResource( 12 )
+
+[node name="Timer" type="Control" parent="Control/Title/Settings"]
+visible = false
+margin_left = 184.0
+margin_top = 568.0
+margin_right = 224.0
+margin_bottom = 608.0
+rect_scale = Vector2( 4, 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerButton" type="Button" parent="Control/Title/Settings/Timer"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -8.0
+margin_top = -8.0
+margin_right = 8.0
+margin_bottom = 12.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="On" type="Sprite" parent="Control/Title/Settings/Timer"]
+visible = false
+texture = ExtResource( 13 )
+
+[node name="Off" type="Sprite" parent="Control/Title/Settings/Timer"]
+texture = ExtResource( 14 )
+
+[node name="Sprite" type="Sprite" parent="Control/Title"]
+
+[node name="LevelSelectScreen" type="Control" parent="Control"]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 19 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BG" type="Sprite" parent="Control/LevelSelectScreen"]
+modulate = Color( 0.576471, 0.576471, 0.576471, 1 )
+position = Vector2( 512, 304 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 11 )
+
+[node name="Buttons" type="Control" parent="Control/LevelSelectScreen"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="1" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 128, 128 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/1"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/1"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/1"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="2" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 320, 128 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/2"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/2"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/2"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]2"
+text = "2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="3" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 512, 128 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/3"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/3"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/3"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]3"
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="4" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 704, 128 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/4"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/4"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/4"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]3"
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="5" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 896, 128 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/5"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/5"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/5"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]3"
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="6" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 512, 320 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/6"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/6"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/6"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]3"
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="7" type="Sprite" parent="Control/LevelSelectScreen/Buttons"]
+visible = false
+modulate = Color( 0.517647, 0.517647, 0.517647, 1 )
+position = Vector2( 1648, 456 )
+scale = Vector2( 4, 4 )
+texture = ExtResource( 20 )
+
+[node name="Button" type="Button" parent="Control/LevelSelectScreen/Buttons/7"]
+modulate = Color( 1, 1, 1, 0 )
+margin_left = -16.0
+margin_top = -16.0
+margin_right = 16.0
+margin_bottom = 16.0
+theme = SubResource( 2 )
+disabled = true
+script = ExtResource( 28 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/LevelSelectScreen/Buttons/7"]
+texture = ExtResource( 21 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/LevelSelectScreen/Buttons/7"]
+visible = false
+modulate = Color( 0.709804, 0.694118, 0.709804, 1 )
+margin_left = -13.918
+margin_top = -8.0
+margin_right = 18.082
+margin_bottom = 24.0
+mouse_filter = 2
+theme = SubResource( 3 )
+bbcode_enabled = true
+bbcode_text = "[center]3"
+text = "3"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SelectEnabled" type="Timer" parent="Control/LevelSelectScreen"]
+wait_time = 0.7
+
+[node name="HUD" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="RichTextLabel" parent="Control/HUD"]
+visible = false
+margin_left = 776.0
+margin_top = 16.0
+margin_right = 1016.0
+margin_bottom = 56.0
+theme = SubResource( 4 )
+bbcode_enabled = true
+bbcode_text = "[right]test"
+text = "test"
+
+[node name="Transition" type="Control" parent="Control"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 1
+script = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite" type="Sprite" parent="Control/Transition"]
+modulate = Color( 0, 0, 0, 0 )
+position = Vector2( 512, 304 )
+scale = Vector2( 16, 9.5 )
+z_index = 100
+texture = ExtResource( 7 )
+
+[node name="Tween" type="Tween" parent="Control/Transition"]
+
+[node name="Timer" type="Timer" parent="Control/Transition"]
+wait_time = 0.35
+one_shot = true
+
+[node name="TransitionWaitTimer" type="Timer" parent="Control/Transition"]
+wait_time = 0.3
+one_shot = true
+
+[node name="TransitionTimer" type="Timer" parent="."]
+wait_time = 0.9
+one_shot = true
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="EscapeTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ExitTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="LevelFade" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="SaveManager" type="Node2D" parent="."]
+script = ExtResource( 18 )
+
+[node name="EscapeEnableTimer" type="Timer" parent="."]
+wait_time = 0.7
+one_shot = true
+
+[node name="ResetTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="ResetEnable" type="Timer" parent="."]
+wait_time = 0.7
+[connection signal="timeout" from="LevelTimer" to="." method="_on_LevelTimer_timeout"]
+[connection signal="timeout" from="Control/PlayEnabledTimer" to="Control" method="_on_PlayEnabledTimer_timeout"]
+[connection signal="button_down" from="Control/Title/Play" to="Control/Title/Play" method="down"]
+[connection signal="button_up" from="Control/Title/Play" to="Control" method="_on_Play_button_up"]
+[connection signal="button_up" from="Control/Title/Play" to="Control/Title/Play" method="up"]
+[connection signal="button_down" from="Control/Title/Exit" to="Control/Title/Exit" method="down"]
+[connection signal="button_up" from="Control/Title/Exit" to="Control" method="_on_Exit_button_up"]
+[connection signal="button_up" from="Control/Title/Exit" to="Control/Title/Exit" method="up"]
+[connection signal="button_down" from="Control/Title/Settings/Fullscreen/FullscreenButton" to="Control/Title/Settings/Fullscreen/FullscreenButton" method="down"]
+[connection signal="button_up" from="Control/Title/Settings/Fullscreen/FullscreenButton" to="Control/Title/Settings" method="_on_FullscreenButton_button_up"]
+[connection signal="button_up" from="Control/Title/Settings/Fullscreen/FullscreenButton" to="Control/Title/Settings/Fullscreen/FullscreenButton" method="up"]
+[connection signal="button_down" from="Control/Title/Settings/Sound/SoundButton" to="Control/Title/Settings/Sound/SoundButton" method="down"]
+[connection signal="button_up" from="Control/Title/Settings/Sound/SoundButton" to="Control/Title/Settings" method="_on_SoundButton_button_up"]
+[connection signal="button_up" from="Control/Title/Settings/Sound/SoundButton" to="Control/Title/Settings/Sound/SoundButton" method="up"]
+[connection signal="button_up" from="Control/Title/Settings/Timer/TimerButton" to="Control/Title/Settings" method="_on_TimerButton_button_up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/1/Button" to="Control/LevelSelectScreen/Buttons/1/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/1/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 1 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/1/Button" to="Control/LevelSelectScreen/Buttons/1/Button" method="up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/2/Button" to="Control/LevelSelectScreen/Buttons/2/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/2/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 2 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/2/Button" to="Control/LevelSelectScreen/Buttons/2/Button" method="up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/3/Button" to="Control/LevelSelectScreen/Buttons/3/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/3/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 3 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/3/Button" to="Control/LevelSelectScreen/Buttons/3/Button" method="up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/4/Button" to="Control/LevelSelectScreen/Buttons/4/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/4/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 4 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/4/Button" to="Control/LevelSelectScreen/Buttons/4/Button" method="up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/5/Button" to="Control/LevelSelectScreen/Buttons/5/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/5/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 5 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/5/Button" to="Control/LevelSelectScreen/Buttons/5/Button" method="up"]
+[connection signal="button_down" from="Control/LevelSelectScreen/Buttons/6/Button" to="Control/LevelSelectScreen/Buttons/6/Button" method="down"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/6/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 6 ]]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/6/Button" to="Control/LevelSelectScreen/Buttons/6/Button" method="up"]
+[connection signal="button_up" from="Control/LevelSelectScreen/Buttons/7/Button" to="Control/LevelSelectScreen" method="_on_button" binds= [ 2 ]]
+[connection signal="timeout" from="Control/LevelSelectScreen/SelectEnabled" to="Control/LevelSelectScreen" method="_on_SelectEnabled_timeout"]
+[connection signal="timeout" from="Control/Transition/Timer" to="Control/Transition" method="_on_Timer_timeout"]
+[connection signal="timeout" from="Control/Transition/TransitionWaitTimer" to="Control/Transition" method="_on_TransitionWaitTimer_timeout"]
+[connection signal="timeout" from="TransitionTimer" to="Control/Transition" method="transition"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_StartTimer_timeout"]
+[connection signal="timeout" from="EscapeTimer" to="." method="_on_EscapeTimer_timeout"]
+[connection signal="timeout" from="ExitTimer" to="." method="_on_ExitTimer_timeout"]
+[connection signal="timeout" from="LevelFade" to="Control" method="_on_LevelFade_timeout"]
+[connection signal="timeout" from="EscapeEnableTimer" to="." method="_on_EscapeEnableTimer_timeout"]
+[connection signal="timeout" from="ResetTimer" to="." method="_on_ResetTimer_timeout"]
+[connection signal="timeout" from="ResetEnable" to="." method="_on_ResetEnable_timeout"]

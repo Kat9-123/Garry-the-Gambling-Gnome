@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://src/PlayerController.gd" type="Script" id=1]
+[ext_resource path="res://assets/sprites/garry.png" type="Texture" id=2]
+[ext_resource path="res://scenes/Pusher.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Collision.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/sprites/f3.png" type="Texture" id=5]
+[ext_resource path="res://assets/sprites/f5.png" type="Texture" id=6]
+[ext_resource path="res://assets/sprites/f2.png" type="Texture" id=7]
+[ext_resource path="res://assets/sprites/f4.png" type="Texture" id=8]
+[ext_resource path="res://src/PlayerAnimation.gd" type="Script" id=9]
+
+
+
+
+
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 7 ), ExtResource( 5 ), ExtResource( 8 ), ExtResource( 6 ), ExtResource( 8 ), ExtResource( 5 ), ExtResource( 7 ) ],
+"loop": false,
+"name": "default",
+"speed": 10.0
+}, {
+"frames": [  ],
+"loop": true,
+"name": "New Anim",
+"speed": 5.0
+} ]
+
+[node name="Player" type="Node2D"]
+
+[node name="Pusher" parent="." instance=ExtResource( 3 )]
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -1.1 )
+scale = Vector2( 2, 2 )
+frames = SubResource( 1 )
+frame = 7
+script = ExtResource( 9 )
+
+[node name="Tween" type="Tween" parent="AnimatedSprite"]
+
+[node name="Timer" type="Timer" parent="AnimatedSprite"]
+wait_time = 0.5
+autostart = true
+
+[node name="PlayerController" type="Node2D" parent="."]
+script = ExtResource( 1 )
+
+[node name="MovementTimer" type="Timer" parent="PlayerController"]
+wait_time = 0.25
+one_shot = true
+autostart = true
+
+[node name="Tween" type="Tween" parent="PlayerController"]
+
+[node name="Collision" parent="PlayerController" instance=ExtResource( 4 )]
+[connection signal="timeout" from="AnimatedSprite/Timer" to="AnimatedSprite" method="_on_Timer_timeout"]

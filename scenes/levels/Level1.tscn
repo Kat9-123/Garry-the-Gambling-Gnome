@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://src/LevelManager.gd" type="Script" id=1]
+[ext_resource path="res://scenes/TileMap.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scenes/Goal.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scenes/Die.tscn" type="PackedScene" id=4]
+[ext_resource path="res://assets/Font.tres" type="DynamicFont" id=5]
+
+
+
+
+[sub_resource type="Theme" id=1]
+default_font = ExtResource( 5 )
+
+[node name="LevelManager" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="TileMap" parent="." instance=ExtResource( 2 )]
+tile_data = PoolIntArray( 65538, 1, 0, 65539, 1, 0, 65540, 1, 0, 65541, 1, 0, 65542, 1, 0, 65543, 1, 0, 65544, 1, 0, 65545, 1, 0, 65546, 1, 0, 65547, 1, 0, 65548, 1, 0, 65549, 1, 0, 131074, 1, 0, 131075, 0, 0, 131076, 0, 0, 131077, 0, 0, 131078, 0, 0, 131079, 0, 0, 131080, 0, 0, 131081, 0, 0, 131082, 0, 0, 131083, 0, 0, 131084, 0, 0, 131085, 1, 0, 196610, 1, 0, 196611, 0, 0, 196612, 0, 0, 196613, 0, 0, 196614, 0, 0, 196615, 0, 0, 196616, 0, 0, 196617, 0, 0, 196618, 2, 0, 196619, 0, 0, 196620, 0, 0, 196621, 1, 0, 262146, 1, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262150, 0, 0, 262151, 0, 0, 262152, 0, 0, 262153, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 0, 0, 262157, 1, 0, 327682, 1, 0, 327683, 0, 0, 327684, 0, 0, 327685, 0, 0, 327686, 1, 0, 327687, 1, 0, 327688, 1, 0, 327689, 1, 0, 327690, 1, 0, 327691, 1, 0, 327692, 1, 0, 327693, 1, 0, 393218, 1, 0, 393219, 0, 0, 393220, 0, 0, 393221, 0, 0, 393222, 1, 0, 458754, 1, 0, 458755, 0, 0, 458756, 0, 0, 458757, 0, 0, 458758, 1, 0, 524290, 1, 0, 524291, 1, 0, 524292, 1, 0, 524293, 1, 0, 524294, 1, 0 )
+
+[node name="Goals" type="Node2D" parent="."]
+
+[node name="Goal" parent="Goals" instance=ExtResource( 3 )]
+position = Vector2( 672, 224 )
+value = 2
+
+[node name="Dice" type="Node2D" parent="."]
+
+[node name="Die" parent="Dice" instance=ExtResource( 4 )]
+position = Vector2( 288, 288 )
+
+[node name="Start" type="Node2D" parent="."]
+position = Vector2( 288, 416 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 480.0
+margin_top = 416.0
+margin_right = 960.0
+margin_bottom = 656.0
+rect_scale = Vector2( 0.8, 0.8 )
+rect_clip_content = false
+theme = SubResource( 1 )
+text = "Press W, A, S & D to move and push the dice to the goal!
+
+Hover over a die with your mouse to find out what faces are next.
+
+Press R to restart
+
+Press Escape to exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
